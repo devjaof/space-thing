@@ -49,8 +49,9 @@ function addStar() {
 
 Array(500).fill().forEach(addStar);
 
-const spaceTexture = new THREE.TextureLoader().load('https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/95629f34144463.56c58b1959576.jpg');
-scene.background = spaceTexture;
+// const spaceTexture = new THREE.TextureLoader().load('https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/95629f34144463.56c58b1959576.jpg');
+const colorBlack = new THREE.Color( 0x0000000 );
+scene.background = colorBlack;
 
 camera.position.z = 100;
 
