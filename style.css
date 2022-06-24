@@ -1,3 +1,8 @@
+button {
+  position: absolute;
+  z-index: 1000;
+}
+
 canvas {
   position: fixed;
   top: 0;
