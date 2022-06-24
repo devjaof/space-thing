@@ -24,14 +24,20 @@ const material = new THREE.MeshStandardMaterial({
   p: 2,
   q: 10,
 });
+
 const torusKnot = new THREE.Mesh(geometry, material);
 scene.add(torusKnot);
 
-const pointLight = new THREE.PointLight(0xffffff);
 const ambientLight = new THREE.AmbientLight(0xffffff);
-pointLight.position.set(20, 5, 5);
-
+const pointLight = new THREE.PointLight({color: 0xffffff});
+pointLight.position.set(0, -40, 0);
 scene.add(pointLight, ambientLight);
+
+const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+scene.add( directionalLight );
+
+// const lightHelper = new THREE.PointLightHelper(pointLight);
+// scene.add( lightHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
