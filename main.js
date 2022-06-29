@@ -23,7 +23,7 @@ camera.position.z = 80;
 let pickle;
 
 new GLTFLoader().load(
-  'assets/picklerick.gltf',
+  './picklerick.gltf',
   function ( object ) {
     pickle = object.scene;
       scene.add( pickle );
@@ -75,7 +75,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 function animate() {
   requestAnimationFrame(animate);
 
-  if(pickle) pickle.rotation.y += 0.01;
+  if(pickle) pickle.rotation.y += 0.005;
 
   controls.update();
 
