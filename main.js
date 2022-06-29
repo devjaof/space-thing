@@ -75,7 +75,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 function animate() {
   requestAnimationFrame(animate);
 
-  pickle.rotation.y += 0.01;
+  if(pickle) pickle.rotation.y += 0.01;
 
   controls.update();
 
