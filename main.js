@@ -2,6 +2,7 @@ import './style.css'
 import * as THREE from 'three';
 
 import { OrbitControls }from 'three/examples/jsm/controls/OrbitControls';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 // set up
 
@@ -17,12 +18,23 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-
 camera.position.z = 100;
 
-// material
+const pickle = new GLTFLoader().load(
+  'assets/picklerick.gltf',
+  function ( object ) {
+      scene.add( object.scene );
+  },
+  function ( xhr ) {
+      console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+  },
+  function ( error ) {
+      console.log('An error happened: ', error );
+  }
+);
 
-const geometry = new THREE.TorusKnotGeometry(20, 7, 20, 400);
+// material
+const geometry = new THREE.TorusKnotGeometry(40, 4, 10, 100);
 const material = new THREE.MeshStandardMaterial({
   color: 0x8318b4
 });
@@ -30,6 +42,7 @@ const material = new THREE.MeshStandardMaterial({
 const torusKnot = new THREE.Mesh(geometry, material);
 scene.add(torusKnot);
 
+//star
 function addStar() {
   const geometry = new THREE.SphereGeometry(1, 24, 24);
   const material = new THREE.MeshStandardMaterial({color: 0xffffff});
@@ -45,6 +58,7 @@ Array(500).fill().forEach(addStar);
 
 const spaceTexture = new THREE.TextureLoader().load('https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/95629f34144463.56c58b1959576.jpg');
 scene.background = spaceTexture;
+
 
 // light
 
@@ -68,18 +82,6 @@ const listener = new THREE.AudioListener();
 camera.add(listener);
 
 const sound = new THREE.Audio(listener);
-
-const audioLoader = new THREE.AudioLoader();
-audioLoader.load('./sound.mp3', (buffer) => {
-  sound.setBuffer(buffer);
-  sound.setLoop( true );
-  sound.setVolume(0.4);
-  console.log('Audio loaded successfully');
-})
-
-document.getElementById('btn').addEventListener('click', () => { 
-  sound.play();
- });
 
 function animate() {
   requestAnimationFrame(animate);
