@@ -18,12 +18,15 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-camera.position.z = 100;
+camera.position.z = 80;
 
-const pickle = new GLTFLoader().load(
+let pickle;
+
+new GLTFLoader().load(
   'assets/picklerick.gltf',
   function ( object ) {
-      scene.add( object.scene );
+    pickle = object.scene;
+      scene.add( pickle );
   },
   function ( xhr ) {
       console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
@@ -33,15 +36,6 @@ const pickle = new GLTFLoader().load(
   }
 );
 
-// material
-const geometry = new THREE.TorusKnotGeometry(40, 4, 10, 100);
-const material = new THREE.MeshStandardMaterial({
-  color: 0x8318b4
-});
-
-const torusKnot = new THREE.Mesh(geometry, material);
-scene.add(torusKnot);
-
 //star
 function addStar() {
   const geometry = new THREE.SphereGeometry(1, 24, 24);
@@ -49,7 +43,7 @@ function addStar() {
 
   const star = new THREE.Mesh(geometry, material);
 
-  const [x, y, z] = Array(3).fill(). map(() => THREE.MathUtils.randFloatSpread(500));
+  const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(500));
 
   star.position.set(x, y, z);
   scene.add(star);
@@ -77,18 +71,11 @@ scene.add( directionalLight );
 // controls
 const controls = new OrbitControls(camera, renderer.domElement);
 
-// sound
-const listener = new THREE.AudioListener();
-camera.add(listener);
-
-const sound = new THREE.Audio(listener);
 
 function animate() {
   requestAnimationFrame(animate);
 
-  torusKnot.rotation.x += 0.01;
-  torusKnot.rotation.y += 0.01;
-  torusKnot.rotation.z += 0.01;
+  pickle.rotation.y += 0.01;
 
   controls.update();
 
